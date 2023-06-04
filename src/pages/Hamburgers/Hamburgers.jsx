@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart } from "../../Redux/cartSlice";
 import { getHamburgers } from "../../services/api";
 import styles from "./Hamburgers.module.css";
@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 export const Hamburgers = () => {
   const [data, setData] = useState(null);
-  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,8 +27,6 @@ export const Hamburgers = () => {
     dispatch(addToCart(product));
     toast.success(`"${product.title}" added to cart`);
   };
-
-  console.log(cart);
 
   return (
     <div>
