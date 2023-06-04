@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+}
+
+.cart {
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+}
+
+.emptyCart {
+  text-align: center;
+  font-size: 32px;
+}
+.cardlist {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.card {
+  padding: 8px;
+  border: 1px solid black;
+  border-radius: 12px;
+}
+
+.contacts {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+.total {
+  text-align: center;
+  font-size: 26px;
+}
+
+.submit {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.btn {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: rgb(52, 169, 253);
+  cursor: pointer;
+  transition: linear 250ms;
+}
+.btn:hover,
+.btn:focus {
+  background-color: rgb(5, 151, 255);
+}

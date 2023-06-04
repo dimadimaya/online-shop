@@ -1,0 +1,11 @@
+.cardlist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.card {
+  padding: 8px;
+  border: 1px solid black;
+  border-radius: 12px;
+}

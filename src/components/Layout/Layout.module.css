@@ -1,0 +1,51 @@
+.container {
+  max-width: 1200px;
+  padding: 0 30px;
+  margin: 0 auto;
+}
+
+.header {
+  height: 90px;
+  display: flex;
+  justify-content: center;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+}
+
+.link {
+  font-family: "Montserrat";
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1.22;
+
+  transform: scale(1);
+
+  transition: transform 250ms linear;
+}
+
+.link:hover,
+.link:focus {
+  transform: scale(1.05);
+}
+
+.active {
+  font-family: "Montserrat";
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1.22;
+  color: red;
+
+  transform: scale(1);
+
+  transition: transform 250ms linear;
+}
+
+.active:hover,
+.active:focus {
+  transform: scale(1.05);
+}
