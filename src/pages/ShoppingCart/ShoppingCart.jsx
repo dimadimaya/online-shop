@@ -15,12 +15,12 @@ export const ShoppingCart = () => {
   const total = useSelector((state) => state.cart.total);
   const dispatch = useDispatch();
 
-  const handleIncreaseQuantity = (productId) => {
-    dispatch(increaseQuantity(productId));
+  const handleIncreaseQuantity = (categoryIndex, productIndex) => {
+    dispatch(increaseQuantity({ categoryIndex, productIndex }));
   };
 
-  const handleDecreaseQuantity = (productId) => {
-    dispatch(decreaseQuantity(productId));
+  const handleDecreaseQuantity = (categoryIndex, productIndex) => {
+    dispatch(decreaseQuantity({ categoryIndex, productIndex }));
   };
 
   const [name, setName] = useState("");
@@ -67,21 +67,34 @@ export const ShoppingCart = () => {
       ) : (
         <div className={styles.cart}>
           <div className={styles.cardlist}>
-            {cart.map((product) => (
-              <div key={product._id} className={styles.card}>
-                <img src={product.image} alt={product.name} width={280} />
-                <div>{product.title}</div>
-                <div>{product.price} UAH</div>
-                <div>
-                  Quantity:
-                  <button onClick={() => handleDecreaseQuantity(product._id)}>
-                    -
-                  </button>
-                  {product.quantity}
-                  <button onClick={() => handleIncreaseQuantity(product._id)}>
-                    +
-                  </button>
-                </div>
+            {cart.map((category, categoryIndex) => (
+              <div key={category.category} className={styles.category}>
+                <div className={styles.categoryTitle}>{category.category}</div>
+                {category.products.map((product, productIndex) => (
+                  <div key={product._id} className={styles.card}>
+                    <img src={product.image} alt={product.title} width={280} />
+                    <div>{product.title}</div>
+                    <div>{product.price} UAH</div>
+                    <div>
+                      Quantity:
+                      <button
+                        onClick={() =>
+                          handleDecreaseQuantity(categoryIndex, productIndex)
+                        }
+                      >
+                        -
+                      </button>
+                      {product.quantity}
+                      <button
+                        onClick={() =>
+                          handleIncreaseQuantity(categoryIndex, productIndex)
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             ))}
           </div>
@@ -120,7 +133,7 @@ export const ShoppingCart = () => {
             </div>
           </div>
           <div className={styles.submit}>
-            <div className={styles.total}> Total: {total}</div>
+            <div className={styles.total}>Total: {total}</div>
             <button className={styles.btn} onClick={handleSubmit} type="submit">
               Submit
             </button>

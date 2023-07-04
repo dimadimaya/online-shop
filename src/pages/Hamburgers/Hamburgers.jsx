@@ -24,7 +24,8 @@ export const Hamburgers = () => {
   }, []);
 
   const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
+    const { category, ...productData } = product;
+    dispatch(addToCart({ category, product: productData }));
     toast.success(`"${product.title}" added to cart`);
   };
 

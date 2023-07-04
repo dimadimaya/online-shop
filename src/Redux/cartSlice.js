@@ -8,39 +8,54 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
-      const existingProduct = state.products.find(
-        (product) => product._id === action.payload._id
+      console.log("action.payload:", action.payload);
+      const { category, product } = action.payload;
+
+      // Проверяем, есть ли уже товары из этой категории магазинов в корзине
+      const existingCategory = state.products.find(
+        (item) => item.category === category
       );
 
-      if (existingProduct) {
-        existingProduct.quantity += 1;
+      if (existingCategory) {
+        // Находим товар в категории и увеличиваем его количество
+        const existingProduct = existingCategory.products.find(
+          (item) => item._id === product._id
+        );
+
+        if (existingProduct) {
+          existingProduct.quantity++;
+        } else {
+          // Добавляем новый товар в категорию
+          existingCategory.products.push({ ...product, quantity: 1 });
+        }
       } else {
-        state.products.push({ ...action.payload, quantity: 1 });
+        // Создаем новую категорию и добавляем товар в нее
+        state.products.push({
+          category,
+          products: [{ ...product, quantity: 1 }],
+        });
       }
-      state.total += action.payload.price;
+
+      state.total += product.price;
     },
     increaseQuantity: (state, action) => {
-      const product = state.products.find(
-        (product) => product._id === action.payload
-      );
-      if (product) {
-        product.quantity += 1;
-        state.total += product.price;
-      }
+      console.log(action.payload);
+      const { categoryIndex, productIndex } = action.payload;
+      state.products[categoryIndex].products[productIndex].quantity += 1;
+      state.total += state.products[categoryIndex].products[productIndex].price;
     },
     decreaseQuantity: (state, action) => {
-      const productIndex = state.products.findIndex(
-        (product) => product._id === action.payload
-      );
-      if (productIndex !== -1) {
-        const product = state.products[productIndex];
-        if (product.quantity > 1) {
-          product.quantity -= 1;
-          state.total -= product.price;
-        } else {
-          state.products.splice(productIndex, 1);
-          state.total -= product.price;
+      const { categoryIndex, productIndex } = action.payload;
+      const product = state.products[categoryIndex].products[productIndex];
+      if (product.quantity > 1) {
+        product.quantity -= 1;
+        state.total -= product.price;
+      } else {
+        state.products[categoryIndex].products.splice(productIndex, 1);
+        if (state.products[categoryIndex].products.length === 0) {
+          state.products.splice(categoryIndex, 1);
         }
+        state.total -= product.price;
       }
     },
     clearCart: (state) => {
